@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--
+        1.spring容器默认的单例模式可以解决循环引用，单例默认支持
+        2.spring容器原型依赖模式scope="prototype"多例模式下不能解决循环引用
+    -->
+
+    <!--depends-on 的意思就是当前这个bean如果要完成，先看depends-on指定的bean是否已经完成了初始化-->
+    <!--scope="prototype"代表每次都要新建一次对象-->
+
+    <bean id="a" class="com.oneby.circulardependency.A">
+        <property name="b" ref="b"/>
+    </bean>
+
+    <bean id="b" class="com.oneby.circulardependency.B" >
+        <property name="a" ref="a"/>
+    </bean>
+
+</beans>
+
